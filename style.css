@@ -35,6 +35,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   background-color: var(--bg-color);
   color: var(--text-white);
@@ -46,6 +51,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  max-width: 100vw;
 }
 
 /* ==========================================================================
@@ -54,6 +61,7 @@ body {
 .scene {
   position: relative;
   width: 100%;
+  max-width: 100vw;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -62,6 +70,7 @@ body {
   padding: 2rem 1rem;
   z-index: 1;
   background: radial-gradient(circle at 50% 50%, #12121a 0%, #08080c 100%);
+  overflow-x: hidden;
 }
 
 /* Efeitos de Glow de Fundo */
@@ -827,100 +836,110 @@ body {
    RESPONSIVIDADE (MEDIA QUERIES)
    ========================================================================== */
 
-/* Tablet e smartphones maiores */
-@media (max-width: 640px) {
+/* Smartphones — até 768px */
+@media (max-width: 768px) {
   .scene {
-    padding: 1rem 0.75rem;
+    padding: 0.5rem 0;
     align-items: stretch;
   }
 
+  /* Esconde glows que causam overflow horizontal */
+  .glow {
+    display: none;
+  }
+
   .card {
-    padding: 1.8rem 1.25rem;
-    border-radius: 18px;
-    width: 100%;
+    padding: 1.6rem 1.2rem;
+    border-radius: 0;
     max-width: 100%;
+    width: 100%;
+    border-left: none;
+    border-right: none;
   }
 
   .step h1 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    line-height: 1.3;
   }
 
   .step h2 {
-    font-size: 1.35rem;
+    font-size: 1.3rem;
+    line-height: 1.3;
   }
 
   .step .sub {
-    font-size: 1rem;
+    font-size: 0.95rem;
     margin-bottom: 1.5rem;
   }
 
   .option {
-    font-size: 1.05rem;
-    padding: 1rem;
+    font-size: 1rem;
+    padding: 0.9rem 1rem;
   }
 
   .options-col .option {
-    padding: 1rem 1.1rem;
+    padding: 0.9rem 1rem;
   }
 
   .field input {
     padding: 0.85rem 1rem;
-    font-size: 1.05rem;
+    font-size: 1rem;
   }
 
   .btn-whatsapp {
     padding: 0.9rem 1rem !important;
   }
 
+  .btn-whatsapp-icon {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+  }
+
   .btn-wa-title {
-    font-size: 0.85rem !important;
+    font-size: 0.82rem !important;
   }
 
   .btn-wa-sub {
-    font-size: 0.72rem !important;
+    font-size: 0.7rem !important;
   }
 
   .result-icon {
-    width: 64px;
-    height: 64px;
-    font-size: 1.8rem;
-  }
-}
-
-/* Smartphones pequenos (iPhone SE, Galaxy A, etc.) */
-@media (max-width: 420px) {
-  .scene {
-    padding: 0.5rem 0;
+    width: 60px;
+    height: 60px;
+    font-size: 1.6rem;
   }
 
-  .card {
-    padding: 1.5rem 1rem;
-    border-radius: 14px;
-    border-left: none;
-    border-right: none;
-  }
-
-  .step h1 {
-    font-size: 1.3rem;
-    line-height: 1.3;
-  }
-
-  .step h2 {
-    font-size: 1.2rem;
-    line-height: 1.3;
+  .result-badge {
+    font-size: 0.8rem;
+    padding: 0.7rem 1rem;
   }
 
   .eyebrow {
     font-size: 0.65rem;
   }
 
-  .option {
-    font-size: 1rem;
-    padding: 0.9rem 0.9rem;
+  .footer-note {
+    font-size: 0.75rem;
+  }
+}
+
+/* Smartphones muito pequenos — até 380px */
+@media (max-width: 380px) {
+  .card {
+    padding: 1.3rem 0.9rem;
   }
 
-  .result-badge {
-    font-size: 0.8rem;
-    padding: 0.7rem 1rem;
+  .step h1 {
+    font-size: 1.2rem;
+  }
+
+  .step h2 {
+    font-size: 1.1rem;
+  }
+
+  .option {
+    font-size: 0.95rem;
+    padding: 0.8rem 0.85rem;
   }
 }
