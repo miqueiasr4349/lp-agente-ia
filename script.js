@@ -252,6 +252,40 @@ document.addEventListener('DOMContentLoaded', () => {
       const btnWA = document.getElementById('btnWhatsApp');
       if (btnWA) btnWA.href = whatsappUrl;
 
+      // ── WEBHOOK: Envia dados do lead qualificado para o n8n ─────────────────
+      const webhookPayload = {
+        nome: formData.nome,
+        telefone: formData.telefone,
+        notebook: formData.notebook,
+        investimento: formData.investimento,
+        usaIA: formData.usaIA,
+        posicao: formData.posicao,
+        status: 'qualified',
+        timestamp: new Date().toISOString()
+      };
+
+      fetch('https://merit-n8n.jcspip.easypanel.host/webhook/0ac84750-cd20-4836-9881-6ce9ca248789', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(webhookPayload)
+      })
+      .then(res => {
+        console.log('[WEBHOOK] Resposta:', res.status, res.statusText);
+      })
+      .catch(err => {
+        console.warn('[WEBHOOK] Erro (tentando no-cors):', err.message);
+        // Fallback: tenta sem CORS (o navegador não lê a resposta, mas o POST chega)
+        fetch('https://merit-n8n.jcspip.easypanel.host/webhook/0ac84750-cd20-4836-9881-6ce9ca248789', {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(webhookPayload)
+        })
+        .then(() => console.log('[WEBHOOK] Enviado via no-cors (sem confirmação de resposta)'))
+        .catch(e => console.error('[WEBHOOK] Falha total:', e.message));
+      });
+      // ────────────────────────────────────────────────────────────────────────
+
       // ── META PIXEL: Dispara evento Lead quando qualificado ──────────────────
       if (typeof fbq === 'function') {
         fbq('track', 'Lead', {
