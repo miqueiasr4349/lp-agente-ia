@@ -330,13 +330,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
       });
 
+    } else if (posicaoDesqualifica) {
+      // ── DESQUALIFICADO POR POSIÇÃO: redireciona direto para obrigado.html ──
+      // Não mostra tela intermediária nem WhatsApp comercial
+      window.location.href = 'obrigado.html';
+
     } else {
-      // Motivo de recusa personalizado
+      // Motivo de recusa personalizado (notebook ou investimento)
       const reasonEl = document.getElementById('unqualifiedReason');
       if (reasonEl) {
-        if (formData.posicao === 'funcionario_sem_gestao' || formData.posicao === 'sem_negocio') {
-          reasonEl.innerHTML = 'A Imersão Agente IA é voltada para <strong>donos de negócios, autônomos e gestores</strong>. No momento, o conteúdo e foco prático não são adequados para o seu perfil.';
-        } else if (!temNotebook && !vamoInvestir) {
+        if (!temNotebook && !vamoInvestir) {
           reasonEl.innerHTML = 'A Imersão Agente IA exige <strong>notebook próprio em sala</strong> e <strong>investimento mínimo em licenças de IA</strong> para o seu Agente funcionar de verdade — sem esses dois pontos, a experiência fica incompleta.';
         } else if (!temNotebook) {
           reasonEl.innerHTML = 'A Imersão Agente IA exige <strong>notebook próprio em sala</strong>, pois você irá construir e deixar o seu Agente de IA rodando ao vivo durante os 2 dias — sem isso, você não conseguirá acompanhar as práticas.';
