@@ -234,7 +234,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function avaliarQualificacao() {
     const temNotebook   = formData.notebook === 'sim';
     const vamoInvestir  = formData.investimento === 'sim';
-    const isQualificado = temNotebook && vamoInvestir;
+    const posicaoDesqualifica = formData.posicao === 'funcionario_sem_gestao' || formData.posicao === 'sem_negocio';
+    const isQualificado = temNotebook && vamoInvestir && !posicaoDesqualifica;
 
     // Monta a URL do WhatsApp com mensagem personalizada
     const primeiroNome = formData.nome.split(' ')[0];
@@ -333,7 +334,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // Motivo de recusa personalizado
       const reasonEl = document.getElementById('unqualifiedReason');
       if (reasonEl) {
-        if (!temNotebook && !vamoInvestir) {
+        if (formData.posicao === 'funcionario_sem_gestao' || formData.posicao === 'sem_negocio') {
+          reasonEl.innerHTML = 'A Imersão Agente IA é voltada para <strong>donos de negócios, autônomos e gestores</strong>. No momento, o conteúdo e foco prático não são adequados para o seu perfil.';
+        } else if (!temNotebook && !vamoInvestir) {
           reasonEl.innerHTML = 'A Imersão Agente IA exige <strong>notebook próprio em sala</strong> e <strong>investimento mínimo em licenças de IA</strong> para o seu Agente funcionar de verdade — sem esses dois pontos, a experiência fica incompleta.';
         } else if (!temNotebook) {
           reasonEl.innerHTML = 'A Imersão Agente IA exige <strong>notebook próprio em sala</strong>, pois você irá construir e deixar o seu Agente de IA rodando ao vivo durante os 2 dias — sem isso, você não conseguirá acompanhar as práticas.';
